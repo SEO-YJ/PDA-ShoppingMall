@@ -25,12 +25,13 @@ public class MemberController {
             // 유저 이름을 log로 출력
             log.info(member.toString());
 
+
+
             // ID 중복 체크
             // 중복이면 사용자 예외 클래스 소환
             //      1) 예외 클래스한테 니가 return 해!
             //      2) 예외만 발생 시키고.. 메세지는 내가 보낼게
-            // TODO: 이 부분 메서드를 빼신 것 같음
-            if (memberService.checkDuplicateId(member.getUserId())) {
+            if (isDuplicateId(member)) {
                 return new ResponseEntity<>(null, HttpStatus.CONFLICT);
             }
 
@@ -46,6 +47,10 @@ public class MemberController {
             return new ResponseEntity<>(user_id, HttpStatus.CREATED);
         } else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    private boolean isDuplicateId(Member member) {
+        return memberService.checkDuplicateId(member.getUserId());
     }
 }
 

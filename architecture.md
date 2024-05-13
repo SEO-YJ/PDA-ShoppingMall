@@ -1,26 +1,30 @@
-### API 설계
-1. 화면 렌더링 API
-   - 카테고리 조회
-2. 버튼 누르면 ( = 엔터 )
-   // - 검색
-   - 카테고리 별 음식점
+# API 명세서
+## Response Format
+### 성공
+```json
+{
+  "success": True,
+  "response": 응답 데이터(객체),
+  "error": null
+}
+```
 
-Category
-id | name
-0    한식
-1    양식
-2    일식
-3    디저트
+### 실패
+```json
+{
+  "success": False,
+  "response": null,
+  "error": {
+    "message": 에러 메시지,
+    "status": Http Status
+  }
+}
+```
 
-/products?category=일식 => /products?category=3
-만약에 일식 -> 디저트로 변경할 경우
-    1. URL을 고쳐야함
-    2. UI를 고쳐야함
+## Domain Driven Design (DDD)
+### 상품
+#### Create: 상품 등록
 
-3. 카테고리별 음식점 전체 조회
-4. 식당 상세 조회
-5. 메뉴 상세 조회 // package: food
-6. 
 
 
 
