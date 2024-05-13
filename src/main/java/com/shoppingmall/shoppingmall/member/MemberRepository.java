@@ -14,6 +14,16 @@ public class MemberRepository {
         System.out.println("/users : repository - " + savedMember);
         return savedMember.getUserId();
     }
+
+    public Boolean duplicate(String userId) {
+        for(String id : memberTable.keySet()) {
+            if(userId == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // @JsonNaming Test
 //      public Member save(Member member) {
 //          memberTable.put(member.getUserId(), member);
