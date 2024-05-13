@@ -21,14 +21,36 @@ public class MemberController {
             log.info(member.toString());
             // Repository에 저장 시도
             String user_id = memberService.join(member);
-
             try{
-                log.info(user_id);
+//                log.info(user_id);
+                  log.info(user_id);
             } catch(NullPointerException e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            return new ResponseEntity<>(user_id, HttpStatus.CREATED);
+//            return new ResponseEntity<>(user_id, HttpStatus.CREATED);
+          return new ResponseEntity<String>(user_id, HttpStatus.CREATED);
         } else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    // @JsonNaming Test
+//    @PostMapping("/join")
+//    public ResponseEntity<Member> join(@RequestBody Member member) {
+//        if(Validator.isAlpha(member.getName())) {
+//            // 유저 이름을 log로 출력
+//            log.info(member.toString());
+//            // Repository에 저장 시도
+////            String user_id = memberService.join(member);
+//            Member user = memberService.join(member);
+//            try{
+////                log.info(user_id);
+//                log.info(user.getUserId());
+//            } catch(NullPointerException e) {
+//                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//            }
+////            return new ResponseEntity<>(user_id, HttpStatus.CREATED);
+//            return new ResponseEntity<Member>(user, HttpStatus.CREATED);
+//        } else
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//    }
 }

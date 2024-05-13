@@ -11,4 +11,8 @@ public class MemberService {
     public String join(Member member) {
         return memberRepository.save(member);
     }
+    // @JsonNaming Test
+//      public Member join(Member member) {
+//          return memberRepository.save(member);
+//      }
 }

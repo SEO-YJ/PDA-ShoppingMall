@@ -14,4 +14,10 @@ public class MemberRepository {
         System.out.println("/users : repository - " + savedMember);
         return savedMember.getUserId();
     }
+    // @JsonNaming Test
+//      public Member save(Member member) {
+//          memberTable.put(member.getUserId(), member);
+//          Member savedMember = memberTable.get(member.getUserId());
+//          return savedMember;
+//      }
 }
