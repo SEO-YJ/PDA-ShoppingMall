@@ -12,9 +12,19 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public Boolean duplicate(String userId) {
-        return memberRepository.duplicate(userId);
+    public boolean checkDuplicateId(String userId) {
+        Member existMember = memberRepository.findById(userId);
+
+        if (existMember == null)
+            return false;
+        else
+            return true;
     }
+
+//    public Boolean duplicate(String userId) {
+//        return memberRepository.duplicate(userId);
+//    }
+
     // @JsonNaming Test
 //      public Member join(Member member) {
 //          return memberRepository.save(member);

@@ -15,14 +15,18 @@ public class MemberRepository {
         return savedMember.getUserId();
     }
 
-    public Boolean duplicate(String userId) {
-        for(String id : memberTable.keySet()) {
-            if(userId == id) {
-                return true;
-            }
-        }
-        return false;
+    public Member findById(String userId) {
+        return memberTable.get(userId);
     }
+
+//    public Boolean duplicate(String userId) {
+//        for(String id : memberTable.keySet()) {
+//            if(userId == id) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     // @JsonNaming Test
 //      public Member save(Member member) {
