@@ -25,8 +25,6 @@ public class MemberController {
             // 유저 이름을 log로 출력
             log.info(member.toString());
 
-
-
             // ID 중복 체크
             // 중복이면 사용자 예외 클래스 소환
             //      1) 예외 클래스한테 니가 return 해!

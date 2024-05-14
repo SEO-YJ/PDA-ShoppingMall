@@ -20,6 +20,7 @@ public class ProductController {
 
 //    @Autowired // DI
     ProductService productService;
+    
     // 상품 개별 등록
     @PostMapping("/products")
     public ResponseEntity registerProduct(@RequestBody Product product) {
