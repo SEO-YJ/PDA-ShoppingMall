@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+// TODO: 24.05.14까지 최신화
 @Repository
 public class MemberRepository {
     private Map<String, Member> memberTable = new HashMap<>();
@@ -19,6 +20,10 @@ public class MemberRepository {
         return memberTable.get(userId);
     }
 
+
+
+// TODO: 아이디 중복 검증 만들어보기
+//
 //    public Boolean duplicate(String userId) {
 //        for(String id : memberTable.keySet()) {
 //            if(userId == id) {
@@ -28,7 +33,9 @@ public class MemberRepository {
 //        return false;
 //    }
 
-    // @JsonNaming Test
+
+// TODO: @JsonNaming Test
+// @JsonNaming Test
 //      public Member save(Member member) {
 //          memberTable.put(member.getUserId(), member);
 //          Member savedMember = memberTable.get(member.getUserId());

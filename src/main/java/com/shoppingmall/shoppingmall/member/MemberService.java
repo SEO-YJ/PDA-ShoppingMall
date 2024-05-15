@@ -3,6 +3,7 @@ package com.shoppingmall.shoppingmall.member;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+// TODO: 24.05.14까지 최신화
 @Service
 @AllArgsConstructor
 public class MemberService {
@@ -21,11 +22,15 @@ public class MemberService {
             return true;
     }
 
+// TODO: 아이디 중복 검증 만들어보기
+//
 //    public Boolean duplicate(String userId) {
 //        return memberRepository.duplicate(userId);
 //    }
 
-    // @JsonNaming Test
+
+// TODO: @JsonNaming Test
+//
 //      public Member join(Member member) {
 //          return memberRepository.save(member);
 //      }
