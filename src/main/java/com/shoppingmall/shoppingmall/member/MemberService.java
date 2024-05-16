@@ -16,10 +16,15 @@ public class MemberService {
     public boolean checkDuplicateId(String userId) {
         Member existMember = memberRepository.findById(userId);
 
-        if (existMember == null)
+        try {
+            if(existMember != null) {
+                throw new DuplicateMemberIdException("중복된 ID 입니다.");
+            }
             return false;
-        else
+        } catch (DuplicateMemberIdException e) {
+            e.getMessage();
             return true;
+        }
     }
 
 // TODO: 아이디 중복 검증 만들어보기

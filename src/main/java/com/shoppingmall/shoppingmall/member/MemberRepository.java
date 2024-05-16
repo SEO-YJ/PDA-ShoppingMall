@@ -18,17 +18,7 @@ public class MemberRepository {
     }
 
     public Member findById(String userId) {
-        Member member = memberTable.get(userId);
-
-        try {
-            if (member != null) {
-                throw new DuplicateMemberIdException("중복된 ID입니다.");
-            }
-        } catch (DuplicateMemberIdException e) {
-            e.getMessage();
-        } finally {
-            return member;
-        }
+        return memberTable.get(userId);
     }
 
 
