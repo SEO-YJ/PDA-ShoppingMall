@@ -1,5 +1,6 @@
 package com.shoppingmall.shoppingmall.member;
 
+import exercise.exception.InputBoundErrorException;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -17,7 +18,17 @@ public class MemberRepository {
     }
 
     public Member findById(String userId) {
-        return memberTable.get(userId);
+        Member member = memberTable.get(userId);
+
+        try {
+            if (member != null) {
+                throw new DuplicateMemberIdException("중복된 ID입니다.");
+            }
+        } catch (DuplicateMemberIdException e) {
+            e.getMessage();
+        } finally {
+            return member;
+        }
     }
 
 
