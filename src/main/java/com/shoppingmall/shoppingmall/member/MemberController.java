@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.error;
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.success;
 
@@ -19,6 +18,7 @@ import static com.shoppingmall.shoppingmall.utils.ApiUtils.success;
 @RestController
 @AllArgsConstructor
 public class MemberController {
+
     MemberService memberService;
 
     @PostMapping("/join/res/en") // Before
