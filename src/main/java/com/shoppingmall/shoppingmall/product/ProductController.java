@@ -156,6 +156,4 @@ public class ProductController {
         productService.deleteProducts(productIds);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

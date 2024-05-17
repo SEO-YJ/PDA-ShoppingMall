@@ -14,7 +14,7 @@ public class OrderRepository {
     private int id = 0; // DB auto_increment
     public Integer save(Order order) {
         log.info("productName  = {}", order.getProduct().getName());
-        log.info("quantity = {}", order.getQuantity());
+//        log.info("quantity = {}", order.getQuantity());
 
         // 여기서 Order 필드의 id 값 추가
         // auto_increment도 진행

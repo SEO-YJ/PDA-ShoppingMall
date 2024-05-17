@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.error;
-import static com.shoppingmall.shoppingmall.utils.ApiUtils.success;
 
 // TODO: 24.05.14까지 최신화
 @Slf4j
@@ -21,7 +20,7 @@ public class OrderController {
     ProductService productService;
 
     @PostMapping("/orders")
-    public ApiUtils.ApiResult<Integer> order(@RequestBody OrderDTO orderDTO) {
+    public ApiUtils.ApiResult<Integer> order(@RequestBody OrderDto orderDTO) {
         // 1. orderDTO의 productID로 Product 조회
         if(Validator.isNumber(orderDTO.getProductId())) {
             Product orderedProduct = productService.findProduct(orderDTO.getProductId());
@@ -34,18 +33,19 @@ public class OrderController {
 
 
                 // Repository에 주문 저장 시도
-                Integer orderId = orderService.order(requestOrder);
+//                Integer orderId = orderService.order(requestOrder);
 //            {
 //	                “success” : True,
 //	                “response” : 응답 데이터(객체),
 //	                “error” : null
 //            }
                 try {
-                    log.info(String.valueOf(orderId));
+                    System.out.println("hi");
+//                    log.info(String.valueOf(orderId));
                 } catch (NullPointerException e) {
                     return error("DB에 저장되지 않음", HttpStatus.INTERNAL_SERVER_ERROR);
                 }
-                return success(orderId);
+//                return success(orderId);
             } else {
                 // 수량에 문자가 포함될 경우
                 return error("수량에 문자열 포함", HttpStatus.BAD_REQUEST);
@@ -55,6 +55,7 @@ public class OrderController {
             // productID가 숫자로 이루어져 있지 않을 경우
             return error("product ID가 숫자로 이루어져 있지 않음", HttpStatus.BAD_REQUEST);
         }
+        return null;
     }
 
 //    // TODO: 강사님 코드 1 - DTO로 변환하기 위한 코드 (24.05.16)

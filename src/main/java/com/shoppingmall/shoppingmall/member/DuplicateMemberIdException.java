@@ -6,8 +6,7 @@ package com.shoppingmall.shoppingmall.member;
  *
  * @author 최종 수정자: 서유준
  * @version 1.0, 작업 내용: 24.05.16 최신화
- * @see
- * DuplicateMemberIdException#getMessage()
+ * @see DuplicateMemberIdException#getMessage()
  */
 public class DuplicateMemberIdException extends RuntimeException {
     /**

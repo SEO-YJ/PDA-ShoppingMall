@@ -5,17 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * 기능: Member Entity 클래스
- * 용도: Member에 대한 Entity로 사용합니다.
- *
- * @author 최종 수정자: 서유준
- * @version 1.0, 작업 내용: 24.05.16 최신화
- * @see Member#toString()
- */
 @Getter
 @Setter
-public class Member {
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class MemberDto {
     /**
      * Member를 구분하기 위한 id 정보
      */
@@ -37,15 +30,9 @@ public class Member {
      */
     private String contact;
 
-    /**
-     * message 멤버 필드를 반환하는 메소드입니다.
-     *
-     * @see Member
-     * @return Member 객체의 멤버 필드를 출력합니다.
-     */
     @Override
     public String toString() {
-        return "Member{" +
+        return "MemberDTO{" +
                 "userId='" + userId + '\'' +
                 ", pw='" + pw + '\'' +
                 ", name='" + name + '\'' +
