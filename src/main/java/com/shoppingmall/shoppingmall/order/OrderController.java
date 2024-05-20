@@ -20,16 +20,17 @@ public class OrderController {
     ProductService productService;
 
     @PostMapping("/orders")
-    public ApiUtils.ApiResult<Integer> order(@RequestBody OrderDto orderDTO) {
+    public ApiUtils.ApiResult order(@RequestBody OrderDto orderDto) {
         // 1. orderDTO의 productID로 Product 조회
-        if(Validator.isNumber(orderDTO.getProductId())) {
-            Product orderedProduct = productService.findProduct(orderDTO.getProductId());
+        if(Validator.isNumber(orderDto.getProductId())) {
+            Product orderedProduct = productService.findProduct(orderDto.getProductId());
+
             if(orderedProduct == null) {
                 return error("productID에 해당 하는 Product가 존재하지 않음", HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            if (Validator.isNumber(orderDTO.getCount())) {
+            if (Validator.isNumber(orderDto.getCount())) {
                 // 주문 log 출력
-                log.info(orderDTO.toString());
+                log.info(orderDto.toString());
 
 
                 // Repository에 주문 저장 시도

@@ -1,16 +1,20 @@
 package com.shoppingmall.shoppingmall.member;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 // TODO: 24.05.14까지 최신화
 @Service
 @AllArgsConstructor
+@Slf4j
 public class MemberService {
     MemberRepository memberRepository;
 
-    public String join(Member member) {
-        return memberRepository.save(member);
+    public String join(MemberDto memberDto) {
+        // Dto -> Entity 변환
+        Member requestMember = memberDto.convertToEntity();
+        return memberRepository.save(requestMember);
     }
 
     public boolean checkDuplicateId(String userId) {
@@ -22,7 +26,7 @@ public class MemberService {
             }
             return false;
         } catch (DuplicateMemberIdException e) {
-            e.getMessage();
+            log.info(e.getMessage());
             return true;
         }
     }
