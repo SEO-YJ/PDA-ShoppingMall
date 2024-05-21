@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,6 +81,16 @@ public class MemberController {
     }
     private boolean isDuplicateId(MemberDto memberDto) {
         return memberService.checkDuplicateId(memberDto.getUserId());
+    }
+
+    @GetMapping("/datasource")
+    public ApiUtils.ApiResult makeConnection() {
+        Connection connect = memberService.makeConnection();
+        if(connect != null) {
+            return success(connect);
+        } else {
+            return error("연결 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //    @PostMapping("/join")

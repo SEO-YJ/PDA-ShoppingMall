@@ -3,6 +3,10 @@ package com.shoppingmall.shoppingmall.member;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.shoppingmall.shoppingmall.product.Product;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +23,15 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Entity
 //@RequiredArgsConstructor
 public class Member {
+    /**
+     * PK
+     * Member를 DB에서 구분하기 위한 정보
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     /**
      * Member를 구분하기 위한 id 정보
