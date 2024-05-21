@@ -1,11 +1,8 @@
 package com.shoppingmall.shoppingmall.member;
 
-import exercise.exception.InputBoundErrorException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
@@ -34,7 +31,6 @@ public class MemberRepository {
     public String save(Member member) {
         // memberTable.put(member.getUserId(), member);
         entityManager.persist(member);
-
         // Member savedMember =  memberTable.get(member.getUserId());
         Member savedMember = entityManager.find(Member.class, member.getId());
         System.out.println("/users : repository - " + savedMember);
@@ -43,6 +39,12 @@ public class MemberRepository {
 
     public Member findById(String userId) {
         return memberTable.get(userId);
+    }
+
+    public Optional<Member> findByUserID(String userId){
+        return entityManager.createQuery("select m from Member m where m.userId = :userId",Member.class)
+                .setParameter("userId", userId)
+                .getResultList().stream().findAny();
     }
 
 

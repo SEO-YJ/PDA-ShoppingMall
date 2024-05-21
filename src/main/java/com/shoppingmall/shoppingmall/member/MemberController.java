@@ -1,19 +1,16 @@
 package com.shoppingmall.shoppingmall.member;
 
+import com.shoppingmall.shoppingmall.member.dto.LoginReqDto;
+import com.shoppingmall.shoppingmall.member.dto.MemberDto;
 import com.shoppingmall.shoppingmall.utils.ApiUtils;
 import com.shoppingmall.shoppingmall.utils.Validator;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.error;
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.success;
@@ -78,6 +75,19 @@ public class MemberController {
             return success(userId);
         } else
             return error("아이디 숫자 포함", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/login")
+    public ApiUtils.ApiResult login(@Valid @RequestBody LoginReqDto loginReqDto) {
+
+        Member loginMember = memberService.login(loginReqDto);
+
+        try {
+            log.info(loginMember.toString());
+        } catch (NullPointerException e) {
+            error("로그인에 실패하였습니다.", HttpStatus.BAD_REQUEST);
+        }
+        return success(loginMember);
     }
     private boolean isDuplicateId(MemberDto memberDto) {
         return memberService.checkDuplicateId(memberDto.getUserId());

@@ -1,10 +1,13 @@
 package com.shoppingmall.shoppingmall.member;
 
+import com.shoppingmall.shoppingmall.member.dto.LoginReqDto;
+import com.shoppingmall.shoppingmall.member.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
+import java.util.Optional;
 
 // TODO: 24.05.14까지 최신화
 @Service
@@ -35,6 +38,15 @@ public class MemberService {
 
     public Connection makeConnection() {
         return memberRepository.makeConnection();
+    }
+
+    public Member login(LoginReqDto loginReqDto) {
+        Member member = loginReqDto.convertToEntity();
+        Optional<Member> findMember = memberRepository.findByUserID(member.getUserId());
+        if(!findMember.orElseThrow(()->new NotCorrespondingEmailException("해당 이메일이 존재하지 않습니다.")).checkPassword(member.getPw())){
+            throw new IllegalStateException("이메일과 비밀번호가 일치하지 않습니다.");
+        }
+        return findMember.get();
     }
 
 // TODO: 아이디 중복 검증 만들어보기

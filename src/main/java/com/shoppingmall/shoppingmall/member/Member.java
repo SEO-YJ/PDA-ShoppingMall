@@ -1,15 +1,12 @@
 package com.shoppingmall.shoppingmall.member;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.shoppingmall.shoppingmall.product.Product;
+import com.shoppingmall.shoppingmall.member.dto.MemberDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -24,6 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 //@RequiredArgsConstructor
 public class Member {
     /**
@@ -54,12 +52,18 @@ public class Member {
      */
     private String contact;
 
+
     public Member(String userId, String pw, String name, String email, String contact) {
         this.userId = userId;
         this.pw = pw;
         this.name = name;
         this.email = email;
         this.contact = contact;
+    }
+
+    public Member(String userId, String pw) {
+        this.userId = userId;
+        this.pw = pw;
     }
 
     /**
@@ -76,6 +80,10 @@ public class Member {
                 memberDto.getEmail(),
                 memberDto.getContact()
         );
+    }
+
+    public boolean checkPassword(String pw){
+        return this.pw.equals(pw);
     }
 
     /**
