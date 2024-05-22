@@ -1,4 +1,4 @@
-package com.shoppingmall.shoppingmall.member;
+package com.shoppingmall.shoppingmall.member.entity;
 
 import com.shoppingmall.shoppingmall.member.dto.MemberDto;
 import jakarta.persistence.Entity;
@@ -16,7 +16,6 @@ import lombok.Setter;
  * @author 최종 수정자: 서유준
  * @version 1.0, 작업 내용: 24.05.19 최신화
  * @see Member#toString()
- * @see Member#fromDtoToEntity(MemberDto)
  */
 @Getter
 @Setter
@@ -28,7 +27,7 @@ public class Member {
      * PK
      * Member를 DB에서 구분하기 위한 정보
      */
-    @Id
+    @Id // 식별자
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     /**
@@ -72,15 +71,15 @@ public class Member {
      * @see Member
      * @return Member 객체를 생성하여 반환합니다.
      */
-    public static Member fromDtoToEntity(MemberDto memberDto) {
-        return new Member(
-                memberDto.getUserId(),
-                memberDto.getPw(),
-                memberDto.getName(),
-                memberDto.getEmail(),
-                memberDto.getContact()
-        );
-    }
+//    public static Member fromDtoToEntity(MemberDto memberDto) {
+//        return new Member(
+//                memberDto.getUserId(),
+//                memberDto.getPw(),
+//                memberDto.getName(),
+//                memberDto.getEmail(),
+//                memberDto.getContact()
+//        );
+//    }
 
     public boolean checkPassword(String pw){
         return this.pw.equals(pw);

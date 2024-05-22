@@ -2,7 +2,7 @@ package com.shoppingmall.shoppingmall.member.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.shoppingmall.shoppingmall.member.Member;
+import com.shoppingmall.shoppingmall.member.entity.Member;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;

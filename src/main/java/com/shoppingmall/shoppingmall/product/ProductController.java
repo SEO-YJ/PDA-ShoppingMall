@@ -74,20 +74,6 @@ public class ProductController {
         }
 
     }
-//    @GetMapping("/products")
-//    public ResponseEntity<List<Product>> findProducts(@RequestParam(required = false) Integer limit,
-//                                                      @RequestParam(required = false) Integer currentPage,
-//                                                      @RequestParam(required = false) Long categoryId) {
-//        try {
-//            Map<String, Object> response = productService.getProducts(limit, currentPage, categoryId);
-//            return ResponseEntity.ok(response);
-//        } catch (Exception e) {
-//            // 로깅 처리 등 오류 관련 처리
-//            return ResponseEntity.status(404).body("Error: " + e.getMessage());
-//        }
-//    }
-
-
 
     // 상품 찾는 방법
     // 이름, id, 필드
@@ -129,19 +115,10 @@ public class ProductController {
         }
 
         // TODO 삭제에 성공, 실패
-        // 내 코드
         Product product = productService.deleteProduct(id);
         if(product != null)
             return new ResponseEntity<>((HttpStatus.OK));
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-        // 강사님 코드
-//        productService.deleteProduct();
-//        Product product = productService.findProduct(id);
-//        if(product == null)
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        else
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/products/delete")
@@ -157,3 +134,24 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
+
+//    @GetMapping("/products")
+//    public ResponseEntity<List<Product>> findProducts(@RequestParam(required = false) Integer limit,
+//                                                      @RequestParam(required = false) Integer currentPage,
+//                                                      @RequestParam(required = false) Long categoryId) {
+//        try {
+//            Map<String, Object> response = productService.getProducts(limit, currentPage, categoryId);
+//            return ResponseEntity.ok(response);
+//        } catch (Exception e) {
+//            // 로깅 처리 등 오류 관련 처리
+//            return ResponseEntity.status(404).body("Error: " + e.getMessage());
+//        }
+//    }
+
+// 강사님 코드
+//        productService.deleteProduct();
+//        Product product = productService.findProduct(id);
+//        if(product == null)
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        else
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

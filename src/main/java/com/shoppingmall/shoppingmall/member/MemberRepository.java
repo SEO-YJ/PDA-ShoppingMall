@@ -1,7 +1,8 @@
 package com.shoppingmall.shoppingmall.member;
 
+import com.shoppingmall.shoppingmall.member.entity.Member;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.FlushModeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,7 @@ public class MemberRepository {
     @Autowired
     private EntityManager entityManager;
 
+
     @Autowired
     DataSource dataSource;
 
@@ -25,29 +27,25 @@ public class MemberRepository {
         return DataSourceUtils.getConnection(dataSource);
     }
 
-
-
-    @Transactional
-    public String save(Member member) {
+    public void save(Member member) {
         // memberTable.put(member.getUserId(), member);
         entityManager.persist(member);
+    }
+
+    public Member findById(int id) {
         // Member savedMember =  memberTable.get(member.getUserId());
-        Member savedMember = entityManager.find(Member.class, member.getId());
-        System.out.println("/users : repository - " + savedMember);
-        return savedMember.getUserId();
+        return entityManager.find(Member.class, id);
     }
 
-    public Member findById(String userId) {
-        return memberTable.get(userId);
-    }
+    public Member findByUserID(String userId){
+        String jpql = "SELECT m FROM Member m WHERE m.userId = :userId";
+        // entityManager 플러시모드 => AUTO => 커밋이나 JPQL 쿼리 실행할 때 플러시 자동 발생
+        System.out.println("플러시모드" + entityManager.getFlushMode());
 
-    public Optional<Member> findByUserID(String userId){
-        return entityManager.createQuery("select m from Member m where m.userId = :userId",Member.class)
+        return entityManager.createQuery(jpql,Member.class)
                 .setParameter("userId", userId)
-                .getResultList().stream().findAny();
+                .getSingleResult();
     }
-
-
 
 // TODO: 아이디 중복 검증 만들어보기
 //

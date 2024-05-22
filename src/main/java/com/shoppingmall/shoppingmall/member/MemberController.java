@@ -2,6 +2,7 @@ package com.shoppingmall.shoppingmall.member;
 
 import com.shoppingmall.shoppingmall.member.dto.LoginReqDto;
 import com.shoppingmall.shoppingmall.member.dto.MemberDto;
+import com.shoppingmall.shoppingmall.member.entity.Member;
 import com.shoppingmall.shoppingmall.utils.ApiUtils;
 import com.shoppingmall.shoppingmall.utils.Validator;
 import jakarta.validation.Valid;
@@ -60,19 +61,13 @@ public class MemberController {
 
             // Repository에 저장 시도
             String userId = memberService.join(memberDto);
-
-//            {
-//	                “success” : True,
-//	                “response” : 응답 데이터(객체),
-//	                “error” : null
-//            }
-
-            try {
-                log.info(userId);
-            } catch (NullPointerException e) {
-                return success(userId);
-            }
             return success(userId);
+//            try {
+//                log.info(userId);
+//            } catch (NullPointerException e) {
+//                return error(userId, HttpStatus.INTERNAL_SERVER_ERROR);
+//            }
+//            return success(userId);
         } else
             return error("아이디 숫자 포함", HttpStatus.BAD_REQUEST);
     }
@@ -90,7 +85,7 @@ public class MemberController {
         return success(loginMember);
     }
     private boolean isDuplicateId(MemberDto memberDto) {
-        return memberService.checkDuplicateId(memberDto.getUserId());
+        return memberService.checkDuplicateId(memberDto);
     }
 
     @GetMapping("/datasource")
