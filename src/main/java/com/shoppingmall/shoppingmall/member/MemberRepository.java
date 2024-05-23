@@ -14,18 +14,8 @@ import java.util.*;
 // TODO: 24.05.14까지 최신화
 @Repository
 public class MemberRepository {
-    private Map<String, Member> memberTable = new HashMap<>();
-
     @Autowired
     private EntityManager entityManager;
-
-
-    @Autowired
-    DataSource dataSource;
-
-    public Connection makeConnection() {
-        return DataSourceUtils.getConnection(dataSource);
-    }
 
     public void save(Member member) {
         // memberTable.put(member.getUserId(), member);
@@ -37,15 +27,16 @@ public class MemberRepository {
         return entityManager.find(Member.class, id);
     }
 
-    public Member findByUserID(String userId){
+    public Member findByUserID(String userId) {
         String jpql = "SELECT m FROM Member m WHERE m.userId = :userId";
         // entityManager 플러시모드 => AUTO => 커밋이나 JPQL 쿼리 실행할 때 플러시 자동 발생
         System.out.println("플러시모드" + entityManager.getFlushMode());
 
-        return entityManager.createQuery(jpql,Member.class)
+        return entityManager.createQuery(jpql, Member.class)
                 .setParameter("userId", userId)
                 .getSingleResult();
     }
+}
 
 // TODO: 아이디 중복 검증 만들어보기
 //
@@ -66,4 +57,12 @@ public class MemberRepository {
 //          Member savedMember = memberTable.get(member.getUserId());
 //          return savedMember;
 //      }
-}
+
+
+// TODO: DataSource Test
+//@Autowired
+//DataSource dataSource;
+//
+//public Connection makeConnection() {
+//    return DataSourceUtils.getConnection(dataSource);
+//}

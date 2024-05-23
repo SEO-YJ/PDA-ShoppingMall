@@ -1,11 +1,13 @@
 package com.shoppingmall.shoppingmall.product;
 
+import com.shoppingmall.shoppingmall.member.MemberController;
+import com.shoppingmall.shoppingmall.product.dto.ProductRegisterReqDto;
+import com.shoppingmall.shoppingmall.product.entity.Product;
+import com.shoppingmall.shoppingmall.utils.ApiUtils;
 import com.shoppingmall.shoppingmall.utils.Validator;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,24 +15,48 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 기능: Product 도메인의 Controller 클래스
+ * 용도: Product 도메인에 대한 응답을 처리하는 Controller로 사용합니다.
+ *
+ * @author 최종 수정자: 서유준
+ * @version 1.0, 작업 내용: 24.05.22 최신화
+ * @see ProductController#registerProduct(Product)
+ * @see ProductController#findProduct(int) 
+ * @see ProductController#findProducts(int, int, Integer) 
+ * @see ProductController#deleteProduct(int) 
+ * @see ProductController#deleteProducts(Map)
+ */
 @Slf4j
 @RestController
 @AllArgsConstructor
 public class ProductController {
 
-//    @Autowired // DI
+    /**
+     * Product에 대한 요청을 처리하기 위해 사용되는 Service 계층 변수
+     */
     ProductService productService;
-    
-    // 상품 개별 등록
+
+    /**
+     *  상품 개별 등록을 하는 메소드입니다.
+     *
+     * @param productRegisterReqDto 클라이언트에게 전달 받은 데이터를 저장할 요청 product dto 객체입니다.
+     * @see ProductController
+     * @return 201(Created) : 정상적으로 MemberDto가 Repository에 저장된 경우
+     * @return 400(Bad Request): MemberDto의 name 멤버값이 문자열로 구성되어 있지 않은 경우
+     * @return 409(Conflict) : userId가 Repository의 Map에 존재하는 경우
+     * @return 500(Internal server error) : 전달한 MemberDto가 Map에 저장되지 않은 경우
+     */
     @PostMapping("/products")
-    public ResponseEntity registerProduct(@RequestBody Product product) {
-        // * 유효성 검사 : name(영어), price(숫자)
+    public ApiUtils.ApiResult registerProduct(@Valid @RequestBody ProductRegisterReqDto productRegisterReqDto) {
+        // * 유효성 검사 : price(숫자)
         // Validator 통해서 유효성 검사
-        if(Validator.isAlpha(product.getName()) && Validator.isNumber(product.getPrice()) && Validator.isNumber(product.getCategoryId())) {
+        if(Validator.isNumber(productRegisterReqDto.getPrice()) && Validator.isNumber(productRegisterReqDto.getCategoryId())) {
             // 상품 등록의 이름을 log로 출력
-            log.info(product.getName());
+            log.info(productRegisterReqDto.getName());
+
             // Repository에 저장 시도
-            Product savedProduct = productService.registerProduct(product);
+            Product savedProduct = productService.registerProduct(productRegisterReqDto);
 
             // Repository에 저장 실패
             // 예외 발생

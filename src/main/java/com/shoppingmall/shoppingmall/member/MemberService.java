@@ -45,10 +45,6 @@ public class MemberService {
         }
     }
 
-    public Connection makeConnection() {
-        return memberRepository.makeConnection();
-    }
-
     public Member login(LoginReqDto loginReqDto) {
         Member member = loginReqDto.convertToEntity();
         Member findMember = memberRepository.findByUserID(member.getUserId());
@@ -57,6 +53,13 @@ public class MemberService {
 //        }
         return findMember;
     }
+
+
+// TODO: 아이디 중복 검증 만들어보기
+//
+//    public Connection makeConnection() {
+//        return memberRepository.makeConnection();
+//    }
 
 // TODO: 아이디 중복 검증 만들어보기
 //

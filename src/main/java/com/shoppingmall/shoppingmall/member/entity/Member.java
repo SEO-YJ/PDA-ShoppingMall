@@ -65,28 +65,12 @@ public class Member {
         this.pw = pw;
     }
 
-    /**
-     *  MemberDto를 전달 받아 Member로 변환하여 반환하는 메소드입니다.
-     *
-     * @see Member
-     * @return Member 객체를 생성하여 반환합니다.
-     */
-//    public static Member fromDtoToEntity(MemberDto memberDto) {
-//        return new Member(
-//                memberDto.getUserId(),
-//                memberDto.getPw(),
-//                memberDto.getName(),
-//                memberDto.getEmail(),
-//                memberDto.getContact()
-//        );
-//    }
-
     public boolean checkPassword(String pw){
         return this.pw.equals(pw);
     }
 
     /**
-     * message 멤버 필드를 반환하는 메소드입니다.
+     * Member Entity의 멤버 필드를 반환하는 메소드입니다.
      *
      * @see Member
      * @return Member 객체의 멤버들을 문자열로 묶어 반환합니다.

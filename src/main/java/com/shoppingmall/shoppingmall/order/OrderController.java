@@ -1,6 +1,6 @@
 package com.shoppingmall.shoppingmall.order;
 
-import com.shoppingmall.shoppingmall.product.Product;
+import com.shoppingmall.shoppingmall.product.entity.Product;
 import com.shoppingmall.shoppingmall.product.ProductService;
 import com.shoppingmall.shoppingmall.utils.ApiUtils;
 import com.shoppingmall.shoppingmall.utils.Validator;

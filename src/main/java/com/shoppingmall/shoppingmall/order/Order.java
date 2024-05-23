@@ -2,7 +2,7 @@ package com.shoppingmall.shoppingmall.order;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.shoppingmall.shoppingmall.product.Product;
+import com.shoppingmall.shoppingmall.product.entity.Product;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

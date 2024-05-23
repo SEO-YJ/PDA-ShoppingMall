@@ -1,9 +1,10 @@
 package com.shoppingmall.shoppingmall.product;
 
+import com.shoppingmall.shoppingmall.product.dto.ProductRegisterReqDto;
+import com.shoppingmall.shoppingmall.product.entity.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -11,9 +12,10 @@ import java.util.List;
 public class ProductService {
     ProductRepository productRepository;
 
-    public Product registerProduct(Product product) {
-        System.out.println("/products : service - " + product.getName());
-        return productRepository.save(product);
+    public Product registerProduct(ProductRegisterReqDto productRegisterReqDto) {
+        // Dto -> Entity 변환
+        Product requestProduct = productRegisterReqDto.convertToEntity();
+        return productRepository.save(requestProduct);
     }
 
     public List<Product> findProducts(int limit, int currentPage) {

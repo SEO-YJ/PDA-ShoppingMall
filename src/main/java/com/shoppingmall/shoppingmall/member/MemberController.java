@@ -38,7 +38,6 @@ public class MemberController {
      * Member 회원가입을 처리하는 메소드입니다.
      *
      * @param memberDto 클라이언트에게 전달 받은 데이터를 저장할 member Entity 객체입니다.
-//     * @param bindingResult 유효성 검사를 진행한 후, 에러가 발생할 경우 사용할 매개변수입니다.
      * @see MemberController
      * @return 201(Created) : 정상적으로 MemberDto가 Repository에 저장된 경우
      * @return 400(Bad Request): MemberDto의 name 멤버값이 문자열로 구성되어 있지 않은 경우
@@ -88,15 +87,15 @@ public class MemberController {
         return memberService.checkDuplicateId(memberDto);
     }
 
-    @GetMapping("/datasource")
-    public ApiUtils.ApiResult makeConnection() {
-        Connection connect = memberService.makeConnection();
-        if(connect != null) {
-            return success(connect);
-        } else {
-            return error("연결 실패", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @GetMapping("/datasource")
+//    public ApiUtils.ApiResult makeConnection() {
+//        Connection connect = memberService.makeConnection();
+//        if(connect != null) {
+//            return success(connect);
+//        } else {
+//            return error("연결 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
     //    @PostMapping("/join")
 //    public ApiUtils.ApiResult join(@Valid @RequestBody MemberDto memberDto) {

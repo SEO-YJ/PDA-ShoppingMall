@@ -1,17 +1,15 @@
 package com.shoppingmall.shoppingmall.product;
 
+import com.shoppingmall.shoppingmall.product.entity.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
 public class ProductRepository {
-    Map<Integer, Product> productTable
-            = new HashMap<>();
     int id = 0; // DB auto_increment
 
     public Product save(Product product) {
-        // 여기서 Product 필드의 id 값 추가
         // auto_increment도 진행
         product.setId(id++);
 
