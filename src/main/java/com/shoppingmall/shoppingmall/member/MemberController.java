@@ -22,7 +22,7 @@ import static com.shoppingmall.shoppingmall.utils.ApiUtils.success;
  *
  * @author 최종 수정자: 서유준
  * @version 1.0, 작업 내용: 24.05.19 최신화
- * @see MemberController#joinByResponseEntity(MemberDto)
+ * @see MemberController#join(MemberDto)
 // * @see MemberController#joinByApiResult(MemberDto, BindingResult)
  */
 @Slf4j
@@ -60,13 +60,12 @@ public class MemberController {
 
             // Repository에 저장 시도
             String userId = memberService.join(memberDto);
+            try {
+                log.info(userId);
+            } catch (NullPointerException e) {
+                return error(userId, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
             return success(userId);
-//            try {
-//                log.info(userId);
-//            } catch (NullPointerException e) {
-//                return error(userId, HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//            return success(userId);
         } else
             return error("아이디 숫자 포함", HttpStatus.BAD_REQUEST);
     }

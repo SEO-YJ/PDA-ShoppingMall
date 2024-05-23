@@ -1,9 +1,6 @@
 package com.shoppingmall.shoppingmall.product.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,10 +24,11 @@ public class Product {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     /**
      * Product를 구분하기 위한 상품명 정보
      */
+    @Column(unique=true)
     private String name;
     /**
      * Product의 가격 정보

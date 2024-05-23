@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.shoppingmall.shoppingmall.product.entity.Product;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +34,6 @@ public class ProductRegisterReqDto {
     /**
      * Product의 가격 정보
      */
-    @NotBlank(message = "가격은 필수 입력입니다.")
     private int price;
     /**
      * Product의 상품 설명 정보
@@ -50,7 +50,6 @@ public class ProductRegisterReqDto {
     /**
      * Product를 카테고리 별로 구분하기 위한 카테고리 id 정보
      */
-    @NotBlank(message = "카테고리 id는 필수 입력입니다.")
     private int categoryId;
 
     public Product convertToEntity() {
