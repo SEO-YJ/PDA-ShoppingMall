@@ -6,6 +6,7 @@ import com.shoppingmall.shoppingmall.domain.product.entity.Product;
 import com.shoppingmall.shoppingmall.exception.DuplicateMemberIdException;
 import com.shoppingmall.shoppingmall.exception.DuplicateProductNameException;
 import com.shoppingmall.shoppingmall.utils.ApiUtils;
+import com.shoppingmall.shoppingmall.utils.Validator;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,6 +85,27 @@ public class ProductController {
         }
     }
 
+    /**
+     *  상품을 개별 조회하는 메소드입니다.
+     *
+     * @param name 클라이언트에게 전달 받은 상품명 변수입니다. 상품명은 공개되도 되는 정보이므로 url에 pathvariable 형태로 전달 받았습니다.
+     * @see ProductController
+     * @return 200(OK) : 정상적으로 상품을 조회한 경우
+     * @return 404(NOT_FOUND) : 상품명과 동일한 상품이 DB에 없는 경우
+     */
+    @GetMapping("/products/{name}")
+    public ApiUtils.ApiResult<Product> findProduct(@PathVariable("name") String name) {
+        if(!Validator.isAlpha(name)){
+            // 요청할 때, 값이 잘 못 전달 된 경우
+            // 즉, 요청이 잘 못된 경우에는 BAD_REQUEST
+            return error(null, HttpStatus.BAD_REQUEST);
+        }
+        log.info(name);
+        Product resultProduct = productService.findProduct(name);
+        return success(resultProduct);
+    }
+
+
     private boolean isDuplicateName(ProductRegisterReq productRegisterReq) {
         return productService.checkDuplicated(productRegisterReq);
     }
@@ -121,26 +143,7 @@ public class ProductController {
 //    // 1. Product 반환 필드 : id가 없다.
 //    // 2. id 숫자만 들어온 거 맞는지 유효성 검사 추가
 //
-    // 상품 개별 조회
-//    @GetMapping("/products/{id}")
-//    public ApiUtils.ApiResult<Product> findProduct(@PathVariable int id) {
-//        if(!Validator.isNumber(id)){
-//            // Logger log = LoggerFactory.getLogger(ProductController.class);
-//
-//            // 요청할 때, 값이 잘 못 전달 된 경우
-//            // 즉, 요청이 잘 못된 경우에는 BAD_REQUEST
-//            // TODO log INFO 레벨 id
-//            // type : generics
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//        Product resultProduct = productService.findProduct(id);
-//
-//        if(resultProduct == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(resultProduct, HttpStatus.OK);
-//    }
-//
+
 //    // 상품 한 개 삭제
 //    @DeleteMapping("/products/{id}")
 //    public ResponseEntity<Product> deleteProduct(@PathVariable("id") int id) {

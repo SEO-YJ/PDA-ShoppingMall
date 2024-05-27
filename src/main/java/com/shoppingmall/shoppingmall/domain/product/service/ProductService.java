@@ -1,5 +1,6 @@
 package com.shoppingmall.shoppingmall.domain.product.service;
 
+import com.shoppingmall.shoppingmall.domain.member.entity.Member;
 import com.shoppingmall.shoppingmall.domain.product.dto.req.ProductRegisterReq;
 import com.shoppingmall.shoppingmall.domain.product.repository.ProductRepository;
 import com.shoppingmall.shoppingmall.domain.product.entity.Product;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -42,9 +44,12 @@ public class ProductService {
 //    public List<Product> findProducts(int limit, int currentPage, int categoryId) {
 //        return productRepository.findProducts(limit, currentPage, categoryId);
 //    }
-//    public Product findProduct(int id) {
-//        return productRepository.findProduct(id);
-//    }
+
+    public Product findProduct(String name) {
+        return productRepository.findByName(name)
+                .orElseThrow(()
+                        -> new NoSuchElementException("상품이 존재하지 않습니다."));
+    }
 //
 //    public Product deleteProduct(int id) {
 //        return productRepository.deleteProduct(id);

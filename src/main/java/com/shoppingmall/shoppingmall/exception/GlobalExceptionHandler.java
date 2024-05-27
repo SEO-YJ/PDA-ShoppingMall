@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.NoSuchElementException;
+
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.error;
 
 // 프로젝트의 모든 컨트롤러의 예외 처리를 전역으로 담당
@@ -42,6 +44,14 @@ public class GlobalExceptionHandler {
         String errorMessage = error.getMessage();
         return error(errorMessage, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiUtils.ApiResult<String> handleNoSuchElementException(NoSuchElementException error) {
+        String errorMessage = error.getMessage();
+        return error(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
 
 //    @ExceptionHandler(MethodArgumentNotValidException.class)
 //    public ResponseEntity<ApiUtils.ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
