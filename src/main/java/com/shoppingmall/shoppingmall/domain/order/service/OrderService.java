@@ -1,5 +1,7 @@
-package com.shoppingmall.shoppingmall.domain.order;
+package com.shoppingmall.shoppingmall.domain.order.service;
 
+import com.shoppingmall.shoppingmall.domain.order.dto.OrderDto;
+import com.shoppingmall.shoppingmall.domain.order.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

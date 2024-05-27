@@ -24,16 +24,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateMemberIdException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ApiUtils.ApiResult handleDuplicateMemberIdException(DuplicateMemberIdException error) {
+    public ApiUtils.ApiResult<String> handleDuplicateMemberIdException(DuplicateMemberIdException error) {
         String errorMessage = error.getMessage();
         return error(errorMessage, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(PasswordNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiUtils.ApiResult handlePasswordNotValidException(PasswordNotValidException error) {
+    public ApiUtils.ApiResult<String> handlePasswordNotValidException(PasswordNotValidException error) {
         String errorMessage = error.getMessage();
-        return error(errorMessage, HttpStatus.CONFLICT);
+        return error(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
 //    @ExceptionHandler(MethodArgumentNotValidException.class)

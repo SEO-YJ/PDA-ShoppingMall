@@ -1,19 +1,31 @@
-package com.shoppingmall.shoppingmall.domain.order;
+package com.shoppingmall.shoppingmall.domain.order.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.shoppingmall.shoppingmall.domain.product.entity.Product;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.ManyToAny;
+import org.hibernate.type.SqlTypes;
 
 // 주문 Entity(Domain Object)
 @Getter
 @Setter
-@RequiredArgsConstructor
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@NoArgsConstructor
+@Entity
+//@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Table(name="orders")
 public class Order {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
     private Product product;
     private int count;
 

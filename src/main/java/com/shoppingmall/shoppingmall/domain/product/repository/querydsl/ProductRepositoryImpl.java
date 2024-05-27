@@ -20,5 +20,4 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .selectFrom(product)
                 .fetch();
     }
-
 }

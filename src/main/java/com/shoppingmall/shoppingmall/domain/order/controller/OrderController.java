@@ -1,5 +1,6 @@
-package com.shoppingmall.shoppingmall.domain.order;
+package com.shoppingmall.shoppingmall.domain.order.controller;
 
+import com.shoppingmall.shoppingmall.domain.order.service.OrderService;
 import com.shoppingmall.shoppingmall.domain.product.service.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

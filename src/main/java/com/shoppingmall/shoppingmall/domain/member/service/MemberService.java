@@ -57,10 +57,14 @@ public class MemberService {
                 .orElseThrow(()
                 -> new NoSuchElementException("아이디가 존재하지 않습니다."));
 
-        if(loginMember.getPw().equals(member.getPw()))
+        if(isRightPassword(loginMember, member))
             return loginMember.getName();
         else
             throw new PasswordNotValidException("비밀번호가 일치하지 않습니다.");
+    }
+
+    private static boolean isRightPassword(Member loginMember, Member member) {
+        return loginMember.getPw().equals(member.getPw());
     }
 
     public List<Member> getMembers() {
