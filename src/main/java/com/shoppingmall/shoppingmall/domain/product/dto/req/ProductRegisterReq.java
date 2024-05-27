@@ -14,17 +14,13 @@ import lombok.Setter;
  *
  * @author 최종 수정자: 서유준
  * @version 1.0, 작업 내용: 24.05.23 최신화
- * @see ProductRegisterReqDto#convertToEntity()
- * @see ProductRegisterReqDto#toString()
+ * @see ProductRegisterReq#convertToEntity()
+ * @see ProductRegisterReq#toString()
  */
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ProductRegisterReqDto {
-    /**
-     * DB에서 Product를 구분하기 위한 id 정보
-     */
-    private int id;
+public class ProductRegisterReq {
     /**
      * Product를 구분하기 위한 상품명 정보
      */
@@ -58,7 +54,6 @@ public class ProductRegisterReqDto {
     @Override
     public String toString() {
         return "ProductDto{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +

@@ -1,8 +1,10 @@
 package com.shoppingmall.shoppingmall.domain.product.controller;
 
 import com.shoppingmall.shoppingmall.domain.product.service.ProductService;
-import com.shoppingmall.shoppingmall.domain.product.dto.req.ProductRegisterReqDto;
+import com.shoppingmall.shoppingmall.domain.product.dto.req.ProductRegisterReq;
 import com.shoppingmall.shoppingmall.domain.product.entity.Product;
+import com.shoppingmall.shoppingmall.exception.DuplicateMemberIdException;
+import com.shoppingmall.shoppingmall.exception.DuplicateProductNameException;
 import com.shoppingmall.shoppingmall.utils.ApiUtils;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -13,7 +15,6 @@ import static com.shoppingmall.shoppingmall.utils.ApiUtils.error;
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.success;
 
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * 기능: Product 도메인의 Controller 클래스
@@ -21,7 +22,7 @@ import java.util.Optional;
  *
  * @author 최종 수정자: 서유준
  * @version 1.0, 작업 내용: 24.05.25 최신화
- * @see ProductController#registerProduct(ProductRegisterReqDto)
+ * @see ProductController#registerProduct(ProductRegisterReq)
  * @see ProductController#findProduct(int) 
  * @see ProductController#findProducts(int, int, Integer) 
  * @see ProductController#deleteProduct(int) 
@@ -40,27 +41,44 @@ public class ProductController {
     /**
      *  상품 개별 등록을 하는 메소드입니다.
      *
-     * @param productRegisterReqDto 클라이언트에게 전달 받은 데이터를 저장할 요청 product dto 객체입니다.
+     * @param productRegisterReq 클라이언트에게 전달 받은 데이터를 저장할 요청 product dto 객체입니다.
      * @see ProductController
-     * @return 201(Created) : 정상적으로 MemberDto가 Repository에 저장된 경우
-     * @return 400(Bad Request): MemberDto의 name 멤버값이 문자열로 구성되어 있지 않은 경우
-     * @return 409(Conflict) : userId가 Repository의 Map에 존재하는 경우
-     * @return 500(Internal server error) : 전달한 MemberDto가 Map에 저장되지 않은 경우
+     * @return 200(OK) : 정상적으로 MemberDto가 DB에 저장된 경우
+     * @return 201(Created) : 정상적으로 MemberDto가 DB에 저장된 경우
+     * @return 400(Bad Request): 유효성 검사에 실패할 경우
+     * @return 409(Conflict) : 상품이름이 DB에 존재하는 경우
+     * @return 500(Internal server error) : 전달한 ProductRegistReq가 DB에 저장되지 않은 경우
      */
-    @PostMapping("/products")
-    public ApiUtils.ApiResult registerProduct(@Valid @RequestBody ProductRegisterReqDto productRegisterReqDto) {
-            log.info(productRegisterReqDto.getName());
+    @PostMapping("/products/register")
+    public ApiUtils.ApiResult registerProduct(@Valid @RequestBody ProductRegisterReq productRegisterReq) {
+            log.info(productRegisterReq.getName());
 
-            Optional<Product> savedProductOpt = productService.registerProduct(productRegisterReqDto);
+            if(isDuplicateName(productRegisterReq)) {
+                return error("상품 이름 중복", HttpStatus.CONFLICT);
+            }
+
+            Product savedProduct = productService.registerProduct(productRegisterReq);
 
             try{
-                Product savedProduct = savedProductOpt.get();
                 log.info(savedProduct.getName());
-                // Repository에 저장 성공
                 return success(savedProduct.toString());
             } catch(NullPointerException e) {
                 return error("상품이 저장되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
             }
+    }
+
+    // 상품 이름 중복 확인 버튼
+    @PostMapping("/products/check")
+    public ApiUtils.ApiResult<String> checkUsableId(@RequestBody ProductRegisterReq productRegisterReq) {
+        if(isDuplicateName(productRegisterReq)) {
+            throw new DuplicateProductNameException("이미 사용 중인 상품명입니다.");
+        } else {
+            return success("사용 가능한 상품명입니다.");
+        }
+    }
+
+    private boolean isDuplicateName(ProductRegisterReq productRegisterReq) {
+        return productService.checkDuplicated(productRegisterReq);
     }
 
 //    // 상품 전체, 카테고리별 조회

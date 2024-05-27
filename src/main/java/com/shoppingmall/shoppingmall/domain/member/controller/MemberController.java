@@ -72,7 +72,7 @@ public class MemberController {
             return error("아이디 숫자 포함", HttpStatus.BAD_REQUEST);
     }
 
-    // 중복 확인 버튼
+    // 아이디 중복 확인 버튼
     @PostMapping("/members/check")
     public ApiUtils.ApiResult<String> checkUsableId(@RequestBody MemberDto memberDto) {
         if(isDuplicateId(memberDto)) {

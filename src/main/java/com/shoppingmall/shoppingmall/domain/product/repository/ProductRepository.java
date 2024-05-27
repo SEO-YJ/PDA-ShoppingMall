@@ -10,6 +10,7 @@ import java.util.Optional;
 // Repository 하나로 기본적은 JpaRepository 기능과 Querydsl을 통한 디테일한 기능을 모두 사용
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
+    Optional<Product> findByName(String name);
     // 기존 ProductRepository 클래스 내에 추가
     // product_table의 모든 값을 List로 반환
     // Map -> Stream -> List

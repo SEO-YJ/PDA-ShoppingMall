@@ -15,10 +15,6 @@ import lombok.Setter;
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class MemberLoginReq {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @NotBlank(message = "아이디는 필수 입력입니다.")
     @Size(min = 6, max = 15, message = "아이디는 6 ~ 15자 이여야 합니다!")
     private String userId;
@@ -36,7 +32,6 @@ public class MemberLoginReq {
     @Override
     public String toString() {
         return "LoginReqDto{" +
-                "id=" + id +
                 ", userId='" + userId + '\'' +
                 ", pw='" + pw + '\'' +
                 '}';

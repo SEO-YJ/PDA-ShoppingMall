@@ -29,6 +29,13 @@ public class GlobalExceptionHandler {
         return error(errorMessage, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(DuplicateProductNameException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiUtils.ApiResult<String> handleDuplicateProductNameException(DuplicateProductNameException error) {
+        String errorMessage = error.getMessage();
+        return error(errorMessage, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(PasswordNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiUtils.ApiResult<String> handlePasswordNotValidException(PasswordNotValidException error) {
