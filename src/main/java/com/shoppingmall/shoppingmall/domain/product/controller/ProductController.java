@@ -67,7 +67,14 @@ public class ProductController {
             }
     }
 
-    // 상품 이름 중복 확인 버튼
+    /**
+     *  상품명 이름의 중복을 체크하는 메소드입니다.
+     *
+     * @param productRegisterReq 클라이언트에게 전달 받은 데이터를 저장할 요청 productRegister dto 객체입니다.
+     * @see ProductController
+     * @return 200(OK) : 정상적으로 중복 체크를 진행한 경우
+     * @return 409(Conflict) : 상품 이름이 DB에 저장되어 있는 경우
+     */
     @PostMapping("/products/check")
     public ApiUtils.ApiResult<String> checkUsableId(@RequestBody ProductRegisterReq productRegisterReq) {
         if(isDuplicateName(productRegisterReq)) {
