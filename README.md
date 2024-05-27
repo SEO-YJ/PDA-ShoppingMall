@@ -20,3 +20,13 @@
 1. Slack -> java_v240517 코드 확인 후 업데이트
 2. API 명세서로 architecture.md 업데이트
 3. javadoc 패키지 에러 수정하기
+
+### 24.05.23
+1. Repository Map -> MySQL로 수정
+
+### 24.05.24
+1. Slack -> java_v240524 코드 확인 후 업데이트
+
+### 24.05.27
+1. 모든 Spring Data Jpa, QueryDSL 적용
+2. Product, Member Domain 리팩터링
