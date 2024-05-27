@@ -1,4 +1,4 @@
-package com.shoppingmall.shoppingmall.domain.member.dto;
+package com.shoppingmall.shoppingmall.domain.member.dto.req;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

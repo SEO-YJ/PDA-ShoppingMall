@@ -1,8 +1,8 @@
 package com.shoppingmall.shoppingmall.domain.member.service;
 
 import com.shoppingmall.shoppingmall.domain.member.entity.Member;
-import com.shoppingmall.shoppingmall.domain.member.dto.MemberLoginReq;
-import com.shoppingmall.shoppingmall.domain.member.dto.MemberDto;
+import com.shoppingmall.shoppingmall.domain.member.dto.req.MemberLoginReq;
+import com.shoppingmall.shoppingmall.domain.member.dto.req.MemberDto;
 
 import com.shoppingmall.shoppingmall.domain.member.repository.MemberRepository;
 import com.shoppingmall.shoppingmall.exception.PasswordNotValidException;

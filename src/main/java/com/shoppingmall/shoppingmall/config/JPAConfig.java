@@ -1,4 +1,4 @@
-package com.shoppingmall.shoppingmall;
+package com.shoppingmall.shoppingmall.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

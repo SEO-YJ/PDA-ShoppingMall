@@ -96,13 +96,11 @@ public class ProductController {
 //    // 1. Product 반환 필드 : id가 없다.
 //    // 2. id 숫자만 들어온 거 맞는지 유효성 검사 추가
 //
-//    // 상품 개별 조회
+    // 상품 개별 조회
 //    @GetMapping("/products/{id}")
-//    public ResponseEntity<Product> findProduct(@PathVariable int id) {
+//    public ApiUtils.ApiResult<Product> findProduct(@PathVariable int id) {
 //        if(!Validator.isNumber(id)){
 //            // Logger log = LoggerFactory.getLogger(ProductController.class);
-//            log.info(id + " haha");
-//            log.info("id {}", "haha");
 //
 //            // 요청할 때, 값이 잘 못 전달 된 경우
 //            // 즉, 요청이 잘 못된 경우에는 BAD_REQUEST

@@ -1,8 +1,8 @@
 package com.shoppingmall.shoppingmall.domain.member.controller;
 
-import com.shoppingmall.shoppingmall.domain.member.dto.MemberLoginReq;
+import com.shoppingmall.shoppingmall.domain.member.dto.req.MemberLoginReq;
 import com.shoppingmall.shoppingmall.domain.member.entity.Member;
-import com.shoppingmall.shoppingmall.domain.member.dto.MemberDto;
+import com.shoppingmall.shoppingmall.domain.member.dto.req.MemberDto;
 import com.shoppingmall.shoppingmall.domain.member.service.MemberService;
 import com.shoppingmall.shoppingmall.exception.DuplicateMemberIdException;
 import com.shoppingmall.shoppingmall.utils.ApiUtils;
