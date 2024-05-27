@@ -28,7 +28,7 @@ public class Member {
      */
     @Id // 식별자
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     /**
      * Member를 구분하기 위한 id 정보
      */

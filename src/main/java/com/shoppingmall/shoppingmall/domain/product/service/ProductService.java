@@ -1,31 +1,33 @@
 package com.shoppingmall.shoppingmall.domain.product.service;
 
-import com.shoppingmall.shoppingmall.domain.product.dto.ProductRegisterReqDto;
+import com.shoppingmall.shoppingmall.domain.product.dto.req.ProductRegisterReqDto;
 import com.shoppingmall.shoppingmall.domain.product.repository.ProductRepository;
 import com.shoppingmall.shoppingmall.domain.product.entity.Product;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor // 필드로 생성자 코드 구현
 public class ProductService {
     ProductRepository productRepository;
 
-    public Product registerProduct(ProductRegisterReqDto productRegisterReqDto) {
-        // Dto -> Entity 변환
+    @Transactional
+    public Optional<Product> registerProduct(ProductRegisterReqDto productRegisterReqDto) {
         Product requestProduct = productRegisterReqDto.convertToEntity();
         Product responseProduct;
 
         try {
             responseProduct = productRepository.save(requestProduct);
+            return Optional.of(responseProduct); // 성공적으로 저장된 경우 저장된 객체를 반환
         } catch (DataIntegrityViolationException e) {
-            // 이곳에서 예외를 처리합니다.
+            // 중복 에러 발생 시 null을 반환
             System.err.println("Duplicate entry detected: " + e.getMessage());
+            return Optional.empty();
         }
-        // 중복 검사를 DB에 맡길? or 코드 단에서 한번 더?
-
-        return responseProduct;
     }
 
 //    public List<Product> findProducts(int limit, int currentPage) {

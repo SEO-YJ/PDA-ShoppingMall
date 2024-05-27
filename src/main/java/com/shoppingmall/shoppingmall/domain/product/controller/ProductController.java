@@ -1,7 +1,7 @@
 package com.shoppingmall.shoppingmall.domain.product.controller;
 
 import com.shoppingmall.shoppingmall.domain.product.service.ProductService;
-import com.shoppingmall.shoppingmall.domain.product.dto.ProductRegisterReqDto;
+import com.shoppingmall.shoppingmall.domain.product.dto.req.ProductRegisterReqDto;
 import com.shoppingmall.shoppingmall.domain.product.entity.Product;
 import com.shoppingmall.shoppingmall.utils.ApiUtils;
 import jakarta.validation.Valid;
@@ -13,13 +13,14 @@ import static com.shoppingmall.shoppingmall.utils.ApiUtils.error;
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.success;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 기능: Product 도메인의 Controller 클래스
  * 용도: Product 도메인에 대한 응답을 처리하는 Controller로 사용합니다.
  *
  * @author 최종 수정자: 서유준
- * @version 1.0, 작업 내용: 24.05.22 최신화
+ * @version 1.0, 작업 내용: 24.05.25 최신화
  * @see ProductController#registerProduct(ProductRegisterReqDto)
  * @see ProductController#findProduct(int) 
  * @see ProductController#findProducts(int, int, Integer) 
@@ -48,19 +49,18 @@ public class ProductController {
      */
     @PostMapping("/products")
     public ApiUtils.ApiResult registerProduct(@Valid @RequestBody ProductRegisterReqDto productRegisterReqDto) {
-            // 상품 등록의 이름을 log로 출력
             log.info(productRegisterReqDto.getName());
 
-            // Repository에 저장 시도
-            Product savedProduct = productService.registerProduct(productRegisterReqDto);
+            Optional<Product> savedProductOpt = productService.registerProduct(productRegisterReqDto);
 
             try{
+                Product savedProduct = savedProductOpt.get();
                 log.info(savedProduct.getName());
+                // Repository에 저장 성공
+                return success(savedProduct.toString());
             } catch(NullPointerException e) {
                 return error("상품이 저장되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            // Repository에 저장 성공
-            return success(savedProduct.toString());
     }
 
 //    // 상품 전체, 카테고리별 조회

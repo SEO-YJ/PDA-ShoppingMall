@@ -1,8 +1,10 @@
-package com.shoppingmall.shoppingmall.domain.member;
+package com.shoppingmall.shoppingmall.domain.member.controller;
 
-import com.shoppingmall.shoppingmall.domain.member.dto.LoginReqDto;
+import com.shoppingmall.shoppingmall.domain.member.dto.MemberLoginReq;
 import com.shoppingmall.shoppingmall.domain.member.entity.Member;
 import com.shoppingmall.shoppingmall.domain.member.dto.MemberDto;
+import com.shoppingmall.shoppingmall.domain.member.service.MemberService;
+import com.shoppingmall.shoppingmall.exception.DuplicateMemberIdException;
 import com.shoppingmall.shoppingmall.utils.ApiUtils;
 import com.shoppingmall.shoppingmall.utils.Validator;
 import jakarta.validation.Valid;
@@ -10,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.error;
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.success;
@@ -42,8 +46,8 @@ public class MemberController {
      * @return 409(Conflict) : userId가 Repository의 Map에 존재하는 경우
      * @return 500(Internal server error) : 전달한 MemberDto가 Map에 저장되지 않은 경우
      */
-    @PostMapping("/join") // 직접 정의한 Response Format으로 반환
-    public ApiUtils.ApiResult join(@Valid @RequestBody MemberDto memberDto) {
+    @PostMapping("/members/join") // 직접 정의한 Response Format으로 반환
+    public ApiUtils.ApiResult<String> join(@Valid @RequestBody MemberDto memberDto) {
         if (Validator.isAlpha(memberDto.getName())) {
             // 유저 이름을 log로 출력
             log.info(memberDto.toString());
@@ -68,18 +72,34 @@ public class MemberController {
             return error("아이디 숫자 포함", HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/login")
-    public ApiUtils.ApiResult login(@Valid @RequestBody LoginReqDto loginReqDto) {
+    // 중복 확인 버튼
+    @PostMapping("/members/check")
+    public ApiUtils.ApiResult<String> checkUsableId(@RequestBody MemberDto memberDto) {
+        if(isDuplicateId(memberDto)) {
+            throw new DuplicateMemberIdException("이미 사용 중인 아이디입니다.");
+        } else {
+            return success("사용 가능한 아이디입니다.");
+        }
+    }
 
-        Member loginMember = memberService.login(loginReqDto);
+    @PostMapping("/members/login")
+    public ApiUtils.ApiResult<String> login(@Valid @RequestBody MemberLoginReq memberLoginReq) {
+        String loginMemberName = memberService.login(memberLoginReq);
 
         try {
-            log.info(loginMember.toString());
+            log.info(loginMemberName);
         } catch (NullPointerException e) {
             error("로그인에 실패하였습니다.", HttpStatus.BAD_REQUEST);
         }
-        return success(loginMember);
+        return success(loginMemberName);
     }
+
+    @GetMapping("/members")
+    public ApiUtils.ApiResult<List<Member>> memberList() {
+        List<Member> members = memberService.getMembers();
+        return success(members);
+    }
+
     private boolean isDuplicateId(MemberDto memberDto) {
         return memberService.checkDuplicateId(memberDto);
     }

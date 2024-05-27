@@ -17,6 +17,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
+@Table(name="product")
 public class Product {
     /**
      * PK

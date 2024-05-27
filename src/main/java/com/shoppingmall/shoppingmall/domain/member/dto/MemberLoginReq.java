@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class LoginReqDto {
+public class MemberLoginReq {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

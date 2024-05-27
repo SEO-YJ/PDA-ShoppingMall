@@ -1,4 +1,4 @@
-package com.shoppingmall.shoppingmall.domain.member;
+package com.shoppingmall.shoppingmall.exception;
 
 
 /**
