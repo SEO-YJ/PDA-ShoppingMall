@@ -11,11 +11,13 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.error;
 import static com.shoppingmall.shoppingmall.utils.ApiUtils.success;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 기능: Product 도메인의 Controller 클래스
@@ -91,18 +93,55 @@ public class ProductController {
      * @param name 클라이언트에게 전달 받은 상품명 변수입니다. 상품명은 공개되도 되는 정보이므로 url에 pathvariable 형태로 전달 받았습니다.
      * @see ProductController
      * @return 200(OK) : 정상적으로 상품을 조회한 경우
+     * @return 400(BAD_REQUEST): 상품명이 비어있거나 null 인 경우
      * @return 404(NOT_FOUND) : 상품명과 동일한 상품이 DB에 없는 경우
      */
     @GetMapping("/products/{name}")
     public ApiUtils.ApiResult<Product> findProduct(@PathVariable("name") String name) {
-        if(!Validator.isAlpha(name)){
+        if(name.isBlank()){
             // 요청할 때, 값이 잘 못 전달 된 경우
             // 즉, 요청이 잘 못된 경우에는 BAD_REQUEST
             return error(null, HttpStatus.BAD_REQUEST);
         }
         log.info(name);
-        Product resultProduct = productService.findProduct(name);
-        return success(resultProduct);
+        Optional<Product> resultProduct = productService.findProduct(name);
+        if(resultProduct.isPresent()){
+            return success(resultProduct.get());
+        } else {
+            return error(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     *  상품을 1개 조회하는 메소드입니다.
+     *
+     * @param name 클라이언트에게 전달 받은 상품명 변수입니다. 상품명은 공개되도 되는 정보이므로 url에 pathvariable 형태로 전달 받았습니다.
+     * @see ProductController
+     * @return 200(OK) : 정상적으로 상품을 조회한 경우
+     * @return 400(BAD_REQUEST): 상품명이 비어있거나 null 인 경우
+     * @return 404(NOT_FOUND) : 상품명과 동일한 상품이 DB에 없는 경우
+     */
+    @DeleteMapping("/products/{name}")
+    public ApiUtils.ApiResult<String> deleteProduct(@PathVariable("name") String name) {
+        if(name.isBlank()) {
+            // 요청할 때, 값이 잘 못 전달 된 경우
+            // 즉, 요청이 잘 못된 경우에는 BAD_REQUEST
+            return error(null, HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Product> findProduct = productService.findProduct(name);
+
+        if(findProduct.isPresent()){
+            productService.deleteProduct(name);
+            Optional<Product> deleteProduct = productService.findProduct(name);
+            if(deleteProduct.isPresent()){
+                return error(String.format("(상품명: %s)가 삭제되지 않았습니다.", name), HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                return success(String.format("(상품명: %s)가 삭제되었습니다.", name));
+            }
+        } else {
+            return error(String.format("(상품명: %s)가 DB에 존재하지 않습니다.", name), HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -144,19 +183,7 @@ public class ProductController {
 //    // 2. id 숫자만 들어온 거 맞는지 유효성 검사 추가
 //
 
-//    // 상품 한 개 삭제
-//    @DeleteMapping("/products/{id}")
-//    public ResponseEntity<Product> deleteProduct(@PathVariable("id") int id) {
-//        if(!Validator.isNumber(id)) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        // TODO 삭제에 성공, 실패
-//        Product product = productService.deleteProduct(id);
-//        if(product != null)
-//            return new ResponseEntity<>((HttpStatus.OK));
-//        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+
 //
 //    @PostMapping("/products/delete")
 //    public ResponseEntity deleteProducts(@RequestBody Map<String, List<Integer>> deleteRequest) {

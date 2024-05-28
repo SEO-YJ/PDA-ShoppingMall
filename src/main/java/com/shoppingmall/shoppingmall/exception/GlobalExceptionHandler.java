@@ -45,12 +45,12 @@ public class GlobalExceptionHandler {
         return error(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiUtils.ApiResult<String> handleNoSuchElementException(NoSuchElementException error) {
-        String errorMessage = error.getMessage();
-        return error(errorMessage, HttpStatus.NOT_FOUND);
-    }
+//    @ExceptionHandler(NoSuchElementException.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public ApiUtils.ApiResult<String> handleNoSuchElementException(NoSuchElementException error) {
+//        String errorMessage = error.getMessage();
+//        return error(errorMessage, HttpStatus.NOT_FOUND);
+//    }
 
 
 //    @ExceptionHandler(MethodArgumentNotValidException.class)

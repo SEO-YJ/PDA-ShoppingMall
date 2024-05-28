@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
     Optional<Product> findByName(String name);
+    void deleteByName(String name);
     // 기존 ProductRepository 클래스 내에 추가
     // product_table의 모든 값을 List로 반환
     // Map -> Stream -> List

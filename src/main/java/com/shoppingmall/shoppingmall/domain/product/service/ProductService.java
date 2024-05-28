@@ -45,15 +45,14 @@ public class ProductService {
 //        return productRepository.findProducts(limit, currentPage, categoryId);
 //    }
 
-    public Product findProduct(String name) {
-        return productRepository.findByName(name)
-                .orElseThrow(()
-                        -> new NoSuchElementException("상품이 존재하지 않습니다."));
+    public Optional<Product> findProduct(String name) {
+        return productRepository.findByName(name);
     }
-//
-//    public Product deleteProduct(int id) {
-//        return productRepository.deleteProduct(id);
-//    }
+
+    @Transactional
+    public void deleteProduct(String name) {
+        productRepository.deleteByName(name);
+    }
 //
 //    public void deleteProducts(List<Integer> productIds) {
 //        productRepository.deleteProducts(productIds);
